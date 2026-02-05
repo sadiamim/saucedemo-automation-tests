@@ -1,13 +1,36 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
+import { InventoryPage } from '../pages/InventoryPage';
+import { CartPage } from '../pages/CartPage';
+import { CheckoutPage } from '../pages/CheckoutPage';
+import { MenuPage } from '../pages/MenuPage';
 
-test.describe('Performance Glitch User Flow', () => {
-  test('performance user purchase journey placeholder', async ({ page }) => {
-    // placeholder for:
-    // - login as performance_glitch_user
-    // - reset app state
-    // - filter products (Name Z to A)
-    // - add first product to cart
-    // - complete checkout
-    // - verify order success
-  });
+test('Performance user sorted purchase flow', async ({ page }) => {
+  await page.goto('/');
+
+  const login = new LoginPage(page);
+  const inventory = new InventoryPage(page);
+  const cart = new CartPage(page);
+  const checkout = new CheckoutPage(page);
+  const menu = new MenuPage(page);
+
+  await login.login('performance_glitch_user', 'secret_sauce');
+  await menu.resetAppState();
+
+  await inventory.sortBy('za');
+  await inventory.addFirstItemToCart();
+  await inventory.goToCart();
+
+  const names = await cart.getProductNames();
+  expect(names.length).toBeGreaterThan(0);
+
+  await cart.checkout();
+  await checkout.fillInformation();
+  await checkout.finishOrder();
+
+  const message = await checkout.getSuccessMessage();
+  expect(message).toBe('Thank you for your order!');
+
+  await menu.resetAppState();
+  await menu.logout();
 });
