@@ -12,4 +12,8 @@
     "allure-playwright": "^2.15.1"
   }
 }
+"scripts": {
+  "test": "npx playwright test",
+  "test:allure": "npx playwright test --reporter=allure-playwright && npx allure generate ./allure-results --clean && npx allure open"
+}
 
