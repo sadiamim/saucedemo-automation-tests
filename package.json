@@ -1,19 +1,5 @@
-{
-  "name": "saucedemo-automation-tests",
-  "version": "1.0.0",
-  "description": "End-to-end UI automation framework for SauceDemo using Playwright",
-  "scripts": {
-    "test": "playwright test",
-    "test:serial": "playwright test --workers=1",
-    "report:allure": "allure generate allure-results --clean && allure open"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.42.0",
-    "allure-playwright": "^2.15.1"
-  }
-}
 "scripts": {
-  "test": "npx playwright test",
-  "test:allure": "npx playwright test --reporter=allure-playwright && npx allure generate ./allure-results --clean && npx allure open"
+  "test": "playwright test",
+  "test:allure": "playwright test",
+  "report:allure": "allure generate allure-results --clean && allure open"
 }
-
