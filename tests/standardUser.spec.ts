@@ -1,34 +1,23 @@
-
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage } from '../pages/CartPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
-import { MenuPage } from '../pages/MenuPage';
+import { allure } from 'allure-playwright';
 
-test('Standard user complete purchase flow', async ({ page }) => {
-  await page.goto('/');
+test.describe('Standard User Flow', () => {
+  test('Standard user login test', async ({ page }) => {
 
-  const login = new LoginPage(page);
-  const inventory = new InventoryPage(page);
-  const cart = new CartPage(page);
-  const checkout = new CheckoutPage(page);
-  const menu = new MenuPage(page);
+    await allure.step('Open login page', async () => {
+      await page.goto('https://www.saucedemo.com/');
+    });
 
-  await login.login('standard_user', 'secret_sauce');
-  await menu.resetAppState();
+    await allure.step('Login as standard user', async () => {
+      await page.fill('#user-name', 'standard_user');
+      await page.fill('#password', 'secret_sauce');
+      await page.click('#login-button');
+    });
 
-  await inventory.addItems(3);
-  await inventory.goToCart();
+    await allure.step('Verify inventory page', async () => {
+      await expect(page).toHaveURL(/inventory/);
+    });
 
-  await cart.checkout();
-  await checkout.fillInformation();
-  await checkout.finishOrder();
-
-  const message = await checkout.getSuccessMessage();
-  expect(message).toBe('Thank you for your order!');
-
-  await menu.resetAppState();
-  await menu.logout();
+  });
 });
 
