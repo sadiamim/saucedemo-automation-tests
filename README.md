@@ -1,31 +1,18 @@
-# saucedemo-automation-tests
-This project is an end-to-end UI automation framework for the SauceDemo web application. It validates login scenarios, cart operations, checkout flow, and order completion for different user types using modern test automation practices, with support for independent and sequential execution and Allure reporting.
-## SauceDemo Automation Tests
+# SauceDemo Automation Tests
 
-## How to Install
-npm install
+This repository contains an end-to-end UI automation testing framework for the **SauceDemo** web application.  
+The framework validates login, cart operations, checkout flow, and order completion for different user types using **Playwright with TypeScript**, following modern automation best practices.
 
-## How to Run Tests
-npm run test
-npm run test:serial
+---
 
-## How to Generate Allure Report
-npm run test
-npm run report:allure
+## 🚀 Tech Stack
 
-Playwright automation framework using Page Object Model.
-
-### Tech Stack
 - Playwright
 - TypeScript
 - Node.js
+- Allure Report
 
-### Setup
-npm install
-npx playwright install
+---
 
-### Run tests
-npx playwright test
+## 📂 Project Structure
 
-### View report
-npx playwright show-report
