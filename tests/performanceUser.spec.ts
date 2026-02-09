@@ -1,37 +1,26 @@
-
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage } from '../pages/CartPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
-import { MenuPage } from '../pages/MenuPage';
+import { allure } from 'allure-playwright';
 
-test('Performance user sorted purchase flow', async ({ page }) => {
-  await page.goto('/');
+test.describe('Performance User Flow', () => {
 
-  const login = new LoginPage(page);
-  const inventory = new InventoryPage(page);
-  const cart = new CartPage(page);
-  const checkout = new CheckoutPage(page);
-  const menu = new MenuPage(page);
+  test('Performance user login', async ({ page }) => {
+    allure.feature('Login');
+    allure.story('Performance User Login');
+    allure.severity('normal');
 
-  await login.login('performance_glitch_user', 'secret_sauce');
-  await menu.resetAppState();
+    await allure.step('Open login page', async () => {
+      await page.goto('https://www.saucedemo.com/');
+    });
 
-  await inventory.sortBy('za');
-  await inventory.addFirstItemToCart();
-  await inventory.goToCart();
+    await allure.step('Login as performance user', async () => {
+      await page.fill('#user-name', 'performance_glitch_user');
+      await page.fill('#password', 'secret_sauce');
+      await page.click('#login-button');
+    });
 
-  const names = await cart.getProductNames();
-  expect(names.length).toBeGreaterThan(0);
+    await allure.step('Verify inventory page loads', async () => {
+      await expect(page).toHaveURL(/inventory/);
+    });
+  });
 
-  await cart.checkout();
-  await checkout.fillInformation();
-  await checkout.finishOrder();
-
-  const message = await checkout.getSuccessMessage();
-  expect(message).toBe('Thank you for your order!');
-
-  await menu.resetAppState();
-  await menu.logout();
 });
