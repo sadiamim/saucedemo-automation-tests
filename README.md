@@ -2,6 +2,17 @@
 This project is an end-to-end UI automation framework for the SauceDemo web application. It validates login scenarios, cart operations, checkout flow, and order completion for different user types using modern test automation practices, with support for independent and sequential execution and Allure reporting.
 ## SauceDemo Automation Tests
 
+## How to Install
+npm install
+
+## How to Run Tests
+npm run test
+npm run test:serial
+
+## How to Generate Allure Report
+npm run test
+npm run report:allure
+
 Playwright automation framework using Page Object Model.
 
 ### Tech Stack
