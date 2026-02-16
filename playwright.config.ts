@@ -6,8 +6,8 @@ export default defineConfig({
     ['allure-playwright']
   ],
   use: {
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-    trace: 'on-first-retry'
-  }
+  screenshot: 'only-on-failure',
+  video: 'retain-on-failure',
+  trace: 'retain-on-failure',
+},
 });
